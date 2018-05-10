@@ -20,4 +20,18 @@ abstract public class Player implements GameObserver {
      * @return the letter chosen by the player
      */
     abstract public char chooseLetter(Game game);
+
+    protected String gameRepresentation(Game game) {
+        int a = game.countFailedAttempts();
+
+        String s = "   ___________\n  /       |   \n  |       ";
+        s += (a == 0 ? "\n" : "O\n");
+        s += "  |     " + (a == 0 ? "\n" : (a < 5
+                ? "  +\n"
+                : (a == 5 ? "--+\n" : "--+--\n")));
+        s += "  |       " + (a < 2 ? "\n" : "|\n");
+        s += "  |      " + (a < 3 ? "\n" : (a == 3 ? "/\n" : "/ \\\n"));
+        s += "  |\n================\n";
+        return s;
+    }
 }
