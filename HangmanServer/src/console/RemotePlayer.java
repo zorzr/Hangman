@@ -41,28 +41,15 @@ public class RemotePlayer extends Player {
         }
     }
 
-    private String gameRepresentation(Game game) {
-        int a = game.countFailedAttempts();
-
-        String s = "   ___________\n  /       |   \n  |       ";
-        s += (a == 0 ? "\n" : "O\n");
-        s += "  |     " + (a == 0 ? "\n" : (a < 5
-                ? "  +\n"
-                : (a == 5 ? "--+\n" : "--+--\n")));
-        s += "  |       " + (a < 2 ? "\n" : "|\n");
-        s += "  |      " + (a < 3 ? "\n" : (a == 3 ? "/\n" : "/ \\\n"));
-        s += "  |\n================\n";
-        return s;
-    }
-
     private void printBanner(String message) {
-        out.println("");
+        String banner = "\n";
         for (int i = 0; i < 80; i++)
-            out.print("*");
-        out.println("\n***  " + message);
+            banner += "*";
+        banner += "\n***  " + message + "\n";
         for (int i = 0; i < 80; i++)
-            out.print("*");
-        out.println("\n");
+            banner += "*";
+
+        out.println(banner);
     }
 
     /**
@@ -74,7 +61,7 @@ public class RemotePlayer extends Player {
     @Override
     public char chooseLetter(Game game) {
         for (;;) {
-            out.print("Inserisci una lettera: ");
+            out.println("Inserisci una lettera: ");
             String line;
             try {
                 line = in.readLine().trim();

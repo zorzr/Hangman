@@ -49,20 +49,6 @@ public class LocalPlayer extends Player {
                 break;
         }
     }
-
-    private String gameRepresentation(Game game) {
-        int a = game.countFailedAttempts();
-        
-        String s = "   ___________\n  /       |   \n  |       ";
-        s += (a == 0 ? "\n" : "O\n");
-        s += "  |     " + (a == 0 ? "\n" : (a < 5
-                ? "  +\n"
-                : (a == 5 ? "--+\n" : "--+--\n")));
-        s += "  |       " + (a < 2 ? "\n" : "|\n");
-        s += "  |      " + (a < 3 ? "\n" : (a == 3 ? "/\n" : "/ \\\n"));
-        s += "  |\n================\n";
-        return s;
-    }
     
     private void printBanner(String message) {
         System.out.println("");

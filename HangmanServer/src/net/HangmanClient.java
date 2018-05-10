@@ -9,7 +9,7 @@ public class HangmanClient {
         PrintWriter out;
 
         String ip = "127.0.0.1";
-        int port = 80;
+        int port = 1025;
 
         try {
             Socket c = new Socket(ip, port);
@@ -19,9 +19,9 @@ public class HangmanClient {
 
             String line;
             while ((line = in.readLine()) != null) {
-                if (!line.equalsIgnoreCase("Inserisci una lettera: "))
-                    System.out.println(line);
-                else
+                System.out.println(line);
+
+                if (line.equalsIgnoreCase("Inserisci una lettera: "))
                     out.println(stdIn.readLine());
             }
 

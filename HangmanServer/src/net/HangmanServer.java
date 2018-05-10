@@ -19,7 +19,7 @@ public class HangmanServer {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int port = 80;
+        int port = 1025;
 
         ServerSocket serverSocket;
         try {
