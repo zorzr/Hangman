@@ -1,6 +1,5 @@
 package net;
 
-import console.LocalPlayer;
 import console.RemotePlayer;
 import hangman.Hangman;
 import hangman.Player;
@@ -8,31 +7,46 @@ import hangman.Player;
 import java.net.*;
 import java.io.*;
 
-/**
- *
- * @author Claudio Cusano <claudio.cusano@unipv.it>
- */
 public class HangmanServer {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         int port = 1025;
 
-        ServerSocket serverSocket;
         try {
-            serverSocket = new ServerSocket(port);
-            Socket s = serverSocket.accept();
+            ServerSocket serverSocket = new ServerSocket(port);
 
-            PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            for (int i = 0; i < 3; i++) {
+                Socket s = serverSocket.accept();
 
-            Hangman game = new Hangman();
-            Player player = new RemotePlayer(in, out);
-            game.playGame(player);
-        } catch (Exception ignored) {}
+                Thread playThread = new PlayThread(s);
+                playThread.start();
+            }
+        } catch (IOException ignored) {}
     }
-    
+}
+
+class PlayThread extends Thread {
+    private BufferedReader in;
+    private PrintWriter out;
+    private Socket socket;
+
+    PlayThread (Socket s) throws IOException {
+        in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        out = new PrintWriter(s.getOutputStream(), true);
+        socket = s;
+    }
+
+    @Override
+    public void run() {
+        Hangman game = new Hangman();
+        Player player = new RemotePlayer(in, out);
+        game.playGame(player);
+
+        try {
+            socket.close();
+        } catch (IOException ignored) {}
+    }
 }
